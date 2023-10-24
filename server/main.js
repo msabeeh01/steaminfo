@@ -1,5 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
+// cors
+import cors from 'cors'
 
 //import routes
 import user_info_router from './routes/user_info_route'
@@ -7,8 +9,7 @@ import user_info_router from './routes/user_info_route'
 dotenv.config()
 const app = express()
 const port = 3001
-
-
+app.use(cors())
 app.use(express.json())
 
 //use routes
