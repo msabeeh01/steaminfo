@@ -17,9 +17,6 @@ app.use(express.json())
 app.use('/uInfo', user_info_router)
 app.use('/aInfo', steam_apps_info_router)
 
-app.get('/', (req, res) => {
-    res.send('HELLO WORLD')
-})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

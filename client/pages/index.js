@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,6 +14,12 @@ export default function Home() {
 
   const GetPlayerSummaries = async () => {
     try {
+      // check if steamID is a number or a string
+      if (isNaN(steamID)) {
+        const vanityURL = steamID
+        const res = await axios.post(`http://127.0.0.1:3001/uInfo/summaries`, {vanityURL})
+        return res.data
+      }
       const res = await axios.post('http://127.0.0.1:3001/uInfo/summaries', { steamID })
       return res.data
     } catch (err) {
@@ -88,9 +95,12 @@ export default function Home() {
         {/* list of first 5 filtered apps */}
         <div className='flex flex-col h-20'>
         {filteredApps && filteredApps.slice(0, 5).map((app) => (
+          <Link href={`/appDetails/${app.appid}`}>
           <div>
             <p>{app.name}</p>
+            <p>{app.appid}</p>
           </div>
+          </Link>
         ))}
         </div>
       </div>
