@@ -27,13 +27,17 @@ const GetAppDetails = async (req, res) => {
 
     const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appID}`)
     const data = await response.json()
-    if(data[appID].success === false){
-        return res.status(404).send({error: "App not found or incorrect ID"})
+
+    if(data[appID].success === true){
+        res.status(200).send(data[appID].data)
     }
-    res.status(200).send(data[appID].data)
+    else{
+        res.status(404).send({error: "App not found or incorrect ID"})
+    }
 }
 
 module.exports = {
     GetAllApps,
-    GetAppPlayers
+    GetAppPlayers,
+    GetAppDetails
 }
